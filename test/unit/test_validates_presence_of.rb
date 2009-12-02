@@ -1,17 +1,23 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 Expectations do
-  
+
   expect false do
     validation = Validatable::ValidatesPresenceOf.new stub_everything, :name
     validation.valid?(stub_everything)
   end
-  
+
+  expect false do
+    validation = Validatable::ValidatesPresenceOf.new stub_everything, :name
+    name = mock({ :nil? => false, :blank? => true })
+    validation.valid?(stub(:name => name))
+  end
+
   expect true do
     validation = Validatable::ValidatesPresenceOf.new stub_everything, :name
     validation.valid?(stub(:name=>"book"))
   end
-  
+
   expect true do
     validation = Validatable::ValidatesPresenceOf.new stub_everything, :name, :allow_nil => true
     validation.valid?(stub(:name=>nil))

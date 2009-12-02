@@ -5,8 +5,8 @@ module Validatable
       return true if allow_nil && value.nil?
       return true if allow_blank && value.blank?
       
-      return false if instance.send(self.attribute).nil?
-      value.respond_to?(:strip) ? instance.send(self.attribute).strip.length != 0 : true
+      return false if value.nil? || value.blank?
+      value.respond_to?(:strip) ? value.strip.length != 0 : true
     end
     
     def message(instance)
